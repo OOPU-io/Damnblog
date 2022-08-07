@@ -1,5 +1,7 @@
-import * as express from "express";
-import { Application } from "express";
+import cors from "cors";
+import express, { Application } from "express";
+// import swaggerFile from "./swagger_output.json";
+
 class App {
   public app: Application;
   public port: number;
@@ -32,9 +34,15 @@ class App {
 
   private assets() {
     this.app.use(express.static("public"));
+    this.app.use(express.static("views"));
+    this.app.use(express.json());
+    this.app.use(express.urlencoded({ extended: true }));
+    this.app.use(cors());
+    // this.app.use("/doc", swaggerUi.serve, swaggerUi.setup(swaggerFile));
   }
 
   private template() {
+    this.app.set("view engine", "pug");
     this.app.set("view engine", "ejs");
   }
 
